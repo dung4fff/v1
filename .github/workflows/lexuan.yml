@@ -8,22 +8,21 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Download Ngrok
-      run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-    - name: Extract Ngrok Archive
-      run: Expand-Archive ngrok.zip
-    - name: Run-Token
-      run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+    - name: Download install Ngrok
+      run: | 
+        Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        Expand-Archive ngrok.zip
+        .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
     - name: Download Important Files To Desktop
       run: Invoke-WebRequest https://raw.githubusercontent.com/lexuann/lexuan/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
-    - name: Enable RDP
+    - name: Config info login VPS
       run: | 
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-        Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Motdulieu2021" -Force)
+        Set-LocalUser -Name "Administrator" -Password (ConvertTo-SecureString -AsPlainText "Motdulieu2021" -Force)
     - name: All done. Show user and pass VPS
       run: | 
         cmd /c NGROK-CHECK.bat
