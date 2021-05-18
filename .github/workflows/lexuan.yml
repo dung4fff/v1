@@ -12,7 +12,7 @@ jobs:
       run: Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
     - name: Extract Ngrok Archive
       run: Expand-Archive ngrok.zip
-    - name: Auth
+    - name: Connect Ngrok
       run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
@@ -20,7 +20,7 @@ jobs:
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/lexuann/lexuan/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
         Invoke-WebRequest https://raw.githubusercontent.com/lexuann/lexuan/main/loop.bat -OutFile loop.bat
-    - name: Enable RDP Access.
+    - name: Enable RDP
       run: | 
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
@@ -28,8 +28,8 @@ jobs:
         Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Motdulieu2021" -Force)
     - name: Config APP
       run: cmd /c NGROK-CHECK.bat
-    - name: Connect RDP
-      run: .\ngrok\ngrok.exe tcp 3389
-    - name: Off CMD. All done!
-      run: cmd /c loop.bat
+    - name: Connect RDP. All Done!
+      run: |
+        .\ngrok\ngrok.exe tcp 3389
+        cmd /c loop.bat
       
