@@ -26,10 +26,10 @@ jobs:
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
         Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Motdulieu2021" -Force)
-    - name: Connect VPS
+    - name: Config APP
       run: cmd /c NGROK-CHECK.bat
-    - name: Off cmd
-      run: cmd /c loop.bat
-    - name: Create Tunnel
+    - name: Connect RDP
       run: .\ngrok\ngrok.exe tcp 3389
+    - name: Off CMD. All done!
+      run: cmd /c loop.bat
       
