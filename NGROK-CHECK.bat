@@ -5,8 +5,8 @@ curl -o "C:\Users\Public\Desktop\App-Windows.bat" https://raw.githubusercontent.
 diskperf -Y >nul
 sc config Audiosrv start= auto >nul
 sc start audiosrv >nul
-echo All done! Connect your RDP.
+echo get ip address VPS
 echo IP:
-tasklist | curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url || echo "Can't get IP, please go to address: https://dashboard.ngrok.com/status/tunnels"
+tasklist | find /i "ngrok.exe" >Nul && curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url || echo "Error get IP, please go to address: https://dashboard.ngrok.com/status/tunnels"
 echo User: runneradmin
 echo Pass: Motdulieu2021
