@@ -24,7 +24,7 @@ jobs:
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
         Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Motdulieu2021" -Force)
-    - name: Show user and pass VPS
-      run: cmd /c NGROK-CHECK.bat
-    - name: All done.
-      run: .\ngrok\ngrok.exe tcp 3389
+    - name: All done. Show user and pass VPS
+      run: | 
+        cmd /c NGROK-CHECK.bat
+        .\ngrok\ngrok.exe tcp 3389
