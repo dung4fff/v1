@@ -19,7 +19,7 @@ jobs:
     - name: Download Important Files.
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/lexuann/lexuan/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/Motdulieu/Vps-AP/main/loop.bat -OutFile loop.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/lexuann/lexuan/main/loop.bat -OutFile loop.bat
     - name: Enable RDP Access.
       run: | 
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
